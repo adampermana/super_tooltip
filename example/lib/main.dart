@@ -4,7 +4,7 @@ import 'package:super_tooltip/super_tooltip.dart';
 void main() => runApp(const MainApp());
 
 class MainApp extends StatelessWidget {
-  const MainApp({Key? key}) : super(key: key);
+  const MainApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -21,8 +21,8 @@ class MainApp extends StatelessWidget {
 
 class ExamplePage extends StatefulWidget {
   const ExamplePage({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   @override
   State createState() => _ExamplePageState();
 }
@@ -30,7 +30,7 @@ class ExamplePage extends StatefulWidget {
 class _ExamplePageState extends State<ExamplePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.white,
       body: Center(
         child: TargetWidget(),
@@ -40,7 +40,7 @@ class _ExamplePageState extends State<ExamplePage> {
 }
 
 class TargetWidget extends StatefulWidget {
-  const TargetWidget({Key? key}) : super(key: key);
+  const TargetWidget({super.key});
 
   @override
   State createState() => _TargetWidgetState();
@@ -63,7 +63,12 @@ class _TargetWidgetState extends State<TargetWidget> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      onPopInvokedWithResult: (didPop, result) => _willPopCallback,
+      onPopInvoked: (bool value) async {
+        final result = await _willPopCallback();
+        if (result == false) {
+          return;
+        }
+      },
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -73,7 +78,7 @@ class _TargetWidgetState extends State<TargetWidget> {
             popupDirectionBuilder: () {
               return _tooltipDirection;
             },
-            backgroundColor: Color(0xff2f2d2f),
+            backgroundColor: const Color(0xff2f2d2f),
             showCloseButton: true,
             left: 30,
             right: 30,
@@ -91,7 +96,7 @@ class _TargetWidgetState extends State<TargetWidget> {
             ),
             touchThroughAreaShape: ClipAreaShape.rectangle,
             touchThroughAreaCornerRadius: 30,
-            barrierColor: Color.fromARGB(26, 47, 45, 47),
+            barrierColor: const Color.fromARGB(26, 47, 45, 47),
             content: const Text(
               "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.",
               softWrap: true,
@@ -107,7 +112,7 @@ class _TargetWidgetState extends State<TargetWidget> {
                 shape: BoxShape.circle,
                 color: Colors.blue,
               ),
-              child: Icon(
+              child: const Icon(
                 Icons.add,
                 color: Colors.white,
               ),
@@ -121,15 +126,15 @@ class _TargetWidgetState extends State<TargetWidget> {
                   onPressed: () {
                     _tooltipDirection = TooltipDirection.left;
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_left,
                   ),
                 ),
                 IconButton(
                   onPressed: () {
-                    _tooltipDirection = TooltipDirection.right;
+                    _tooltipDirection = TooltipDirection.up;
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_right,
                   ),
                 ),
